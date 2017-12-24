@@ -1,0 +1,91 @@
+name:                bitcoin-spv-wallet
+version:             0.1.0.0
+-- synopsis:
+-- description:
+homepage:            https://github.com/lotz84/bitcoin-spv-wallet#readme
+license:             BSD3
+license-file:        LICENSE
+author:              Tatsuya Hirose
+maintainer:          tatsuya.hirose.0804@gmail.com
+copyright:           2017 Tatsuya Hirose
+category:            Web
+build-type:          Simple
+extra-source-files:  README.md
+cabal-version:       >=1.10
+
+library
+  hs-source-dirs:      src
+  exposed-modules:     Bitcoin.Hash
+                     , Bitcoin.Protocol
+                     , Bitcoin.Protocol.NetAddr
+                     , Bitcoin.Protocol.MessageHeader
+                     , Bitcoin.Protocol.Version
+                     , Bitcoin.Protocol.VarInt
+                     , Bitcoin.Protocol.VarStr
+                     , Bitcoin.Protocol.VarList
+                     , Bitcoin.Protocol.Verack
+                     , Bitcoin.Protocol.Ping
+                     , Bitcoin.Protocol.Pong
+                     , Bitcoin.Protocol.Inv
+                     , Bitcoin.Protocol.Mempool
+                     , Bitcoin.Protocol.GetData
+                     , Bitcoin.Protocol.GetBlocks
+                     , Bitcoin.Protocol.Reject
+                     , Bitcoin.Protocol.Tx
+                     , Bitcoin.Protocol.Block
+                     , Bitcoin.Protocol.Filterload
+                     , Bitcoin.Protocol.Merkleblock
+                     , Bitcoin.Types
+                     , Bitcoin.Wallet
+                     , Bitcoin.Script
+  build-depends:       base >= 4.7 && < 5
+                     , array
+                     , base58-bytestring
+                     , binary
+                     , bytestring
+                     , cryptonite
+                     , memory
+                     , murmur3
+                     , mwc-random
+                     , mtl
+                     , network
+                     , secp256k1
+                     , time
+                     , vector-sized
+  default-language:    Haskell2010
+
+executable bitcoin-spv-wallet-exe
+  hs-source-dirs:      app
+  main-is:             Main.hs
+  other-modules:       Wallet
+                     , Send
+                     , Balance
+  ghc-options:         -threaded -rtsopts -with-rtsopts=-N
+  build-depends:       base
+                     , binary
+                     , bytestring
+                     , containers
+                     , mwc-random
+                     , network
+                     , secp256k1
+                     , vector-sized
+                     , directory
+                     , memory
+                     , cryptonite
+                     , stm
+                     , base58-bytestring
+                     , bitcoin-spv-wallet
+  default-language:    Haskell2010
+
+test-suite bitcoin-spv-wallet-test
+  type:                exitcode-stdio-1.0
+  hs-source-dirs:      test
+  main-is:             Spec.hs
+  build-depends:       base
+                     , bitcoin-spv-wallet
+  ghc-options:         -threaded -rtsopts -with-rtsopts=-N
+  default-language:    Haskell2010
+
+source-repository head
+  type:     git
+  location: https://github.com/lotz84/bitcoin-spv-wallet

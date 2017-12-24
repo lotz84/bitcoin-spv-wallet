@@ -1,0 +1,10 @@
+flags: {}
+extra-package-dbs: []
+packages:
+- '.'
+extra-deps:
+- base58-bytestring-0.1.0
+- secp256k1-0.5.2
+- text-1.2.2.2
+- murmur3-1.0.3
+resolver: lts-9.0
