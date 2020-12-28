@@ -39,10 +39,10 @@ readHex = either error id . convertFromBase Base16
 recvAll :: Socket -> Int -> IO ByteString
 recvAll sock size = go [] sock size
   where
-    go recieved _ 0 = pure . BS.concat $ reverse recieved
-    go recieved sock size = do
+    go received _ 0 = pure . BS.concat $ reverse received
+    go received sock size = do
       bs <- recv sock size
-      go (bs:recieved) sock (size - BS.length bs)
+      go (bs:received) sock (size - BS.length bs)
 
 recvMessage :: Binary msg => Socket -> Int -> IO msg
 recvMessage sock size = decode . BL.fromStrict <$> recvAll sock size
