@@ -43,7 +43,17 @@ validate block =
   where
     accum :: (Int -> Int) -> Int -> Int -> State ([Chars 32], [Bool], [Chars 32]) ByteString
     accum ctw height pos = do
-      (h:hs, f:fs, ms) <- State.get
+      -- (h:hs, f:fs, ms) <- State.get
+      
+      -------- This is a dirty and quick patch, avoiding MonadFailDesugaring ---------
+      (hl, fl, ms) <- State.get
+      let   monadfail l   = (case l of 
+                (x:xs)              -> (x:xs)
+                _                   -> error "patern match failure" )
+      let   (h:hs)        = monadfail hl
+            (f:fs)        = monadfail fl
+      -----------------------------------------------------------------------------
+      
       case (f, height == 0) of
         -- 表の手順に従って探索する
         (False, _)     -> State.put (hs, fs,   ms) >> pure (toByteString h)
